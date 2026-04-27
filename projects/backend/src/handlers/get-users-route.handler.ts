@@ -1,8 +1,14 @@
-type User = {
-  id: number;
-  name: string;
-  email: string;
-};
+import { z } from 'zod';
+
+export const UserSchema = z.object({
+  email: z.string().email(),
+  id: z.number(),
+  name: z.string(),
+});
+
+export const UserListSchema = z.array(UserSchema);
+
+export type User = z.infer<typeof UserSchema>;
 
 export async function getUsersRouteHandler(): Promise<User[]> {
   return [

@@ -1,9 +1,12 @@
 import { SignJWT } from 'jose';
+import { z } from 'zod';
 import { DEMO_BEARER_AUDIENCE, DEMO_BEARER_SECRET } from '../app/const.js';
 
-type LoginResponse = {
-  token: string;
-};
+export const LoginResponseSchema = z.object({
+  token: z.string(),
+});
+
+export type LoginResponse = z.infer<typeof LoginResponseSchema>;
 
 export async function loginRouteHandler(): Promise<LoginResponse> {
   const secret = new TextEncoder().encode(DEMO_BEARER_SECRET);
