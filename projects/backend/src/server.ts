@@ -1,5 +1,5 @@
 import { createServer } from 'halide';
-import { config } from './config';
+import { config } from './app/config';
 
 const server = createServer(config);
 
