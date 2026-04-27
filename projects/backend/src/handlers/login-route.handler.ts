@@ -2,6 +2,13 @@ import { SignJWT } from 'jose';
 import { z } from 'zod';
 import { DEMO_BEARER_AUDIENCE, DEMO_BEARER_SECRET } from '../app/const.js';
 
+export const LoginRequestSchema = z.object({
+  password: z.string(),
+  username: z.string(),
+});
+
+export type LoginRequest = z.infer<typeof LoginRequestSchema>;
+
 export const LoginResponseSchema = z.object({
   token: z.string(),
 });

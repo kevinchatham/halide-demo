@@ -1,7 +1,11 @@
 import { type ApiRoute, apiRoute } from 'halide';
 import { getUsersRouteHandler, UserListSchema } from '../handlers/get-users-route.handler';
 import { HealthResponseSchema, healthRouteHandler } from '../handlers/health-route.handler';
-import { LoginResponseSchema, loginRouteHandler } from '../handlers/login-route.handler';
+import {
+  type LoginRequest,
+  LoginResponseSchema,
+  loginRouteHandler,
+} from '../handlers/login-route.handler';
 
 const healthRoute = apiRoute({
   access: 'public',
@@ -19,7 +23,7 @@ const healthRoute = apiRoute({
   path: '/api/health',
 });
 
-const loginRoute = apiRoute({
+const loginRoute = apiRoute<unknown, LoginRequest>({
   access: 'public',
   handler: loginRouteHandler,
   method: 'post',
@@ -51,4 +55,5 @@ const getUsersRoute = apiRoute({
   path: '/api/users',
 });
 
-export const apiRoutes: ApiRoute[] = [healthRoute, loginRoute, getUsersRoute];
+// biome-ignore lint/suspicious/noExplicitAny: group
+export const apiRoutes: ApiRoute<any, any>[] = [healthRoute, loginRoute, getUsersRoute];
