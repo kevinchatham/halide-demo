@@ -1,0 +1,37 @@
+import { apiRoute, createServer } from 'halide';
+
+const server = createServer({
+  apiRoutes: [
+    apiRoute({
+      access: 'public',
+      handler: async () => ({ status: 'ok' }),
+      method: 'get',
+      path: '/health',
+    }),
+  ],
+  observability: {
+    logger: {
+      debug: (...args: unknown[]) => {
+        console.log(args);
+      },
+      error: (...args: unknown[]) => {
+        console.log(args);
+      },
+      info: (...args: unknown[]) => {
+        console.log(args);
+      },
+      warn: (...args: unknown[]) => {
+        console.log(args);
+      },
+    },
+  },
+  spa: {
+    name: 'angular',
+    port: 3553,
+    root: 'dist/angular/browser',
+  },
+});
+
+server.start((port) => {
+  console.log(`Server running on port ${port}`);
+});

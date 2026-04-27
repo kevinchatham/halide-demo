@@ -1,0 +1,10 @@
+{
+  "skills": {
+    "halide": {
+      "computedHash": "72a93703b8a66ac5a6bf0cd5c998396c99d8beeb6812eb0cf4bf91891e3b8a1a",
+      "source": "kevinchatham/halide",
+      "sourceType": "github"
+    }
+  },
+  "version": 1
+}

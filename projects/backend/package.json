@@ -1,12 +1,12 @@
 {
   "name": "backend",
   "version": "1.0.0",
+  "type": "module",
+  "private": true,
   "description": "",
-  "license": "ISC",
-  "author": "",
-  "type": "commonjs",
-  "main": "index.js",
+  "license": "MIT",
+  "author": "kevinchatham",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npx tsx src/server.ts"
   }
 }

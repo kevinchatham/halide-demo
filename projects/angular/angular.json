@@ -4,6 +4,7 @@
     "packageManager": "npm"
   },
   "newProjectRoot": "projects",
+      "prefix": "app",
   "projects": {
     "angular": {
       "architect": {
@@ -48,11 +49,16 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "development": {
-              "buildTarget": "angular:build:development"
+              "buildTarget": "angular:build:development",
+              "proxyConfig": "proxy.conf.json"
             },
             "production": {
-              "buildTarget": "angular:build:production"
+              "buildTarget": "angular:build:production",
+              "proxyConfig": "proxy.conf.json"
             }
+          },
+          "defaultConfiguration": "development"
+        }
           },
           "defaultConfiguration": "development"
         },
@@ -60,11 +66,36 @@
           "builder": "@angular/build:unit-test"
         }
       },
-      "prefix": "app",
       "projectType": "application",
       "root": "",
       "schematics": {},
       "sourceRoot": "src"
+    }
+  },
+  "schematics": {
+    "@schematics/angular:component": {
+      "type": "component"
+    },
+    "@schematics/angular:directive": {
+      "type": "directive"
+    },
+    "@schematics/angular:guard": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:interceptor": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:module": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:pipe": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:resolver": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:service": {
+      "type": "service"
     }
   },
   "version": 1

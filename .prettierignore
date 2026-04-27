@@ -1,0 +1,19 @@
+# Ignore everything
+*
+
+# Re-include desired file types
+!**/*.html
+!**/*.yml
+!**/*.yaml
+!**/*.md
+!**/package.json
+
+# But also re-include directories (IMPORTANT)
+!*/
+
+# Additional exclusions
+**/node_modules
+**/dist
+**/coverage
+.agents/
+.kilo/
