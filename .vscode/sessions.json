@@ -17,18 +17,16 @@
       {
         "autoExecuteCommands": true,
         "color": "terminal.ansiGreen",
-        "commands": ["npx nodemon"],
-        "icon": "sync",
-        "name": "build:watch"
+        "commands": ["cd projects/angular", "npm run serve"],
+        "icon": "browser",
+        "name": "angular-demo"
       },
       {
         "autoExecuteCommands": true,
         "color": "terminal.ansiMagenta",
-        "commands": [
-          "npx concurrently --names \"angular,backend\" --prefix-colors \"blue,magenta\" \"npm run demo:angular:serve:server\" \"npm run demo:backend:serve\""
-        ],
-        "icon": "browser",
-        "name": "demos"
+        "commands": ["cd projects/backend", "npm run serve"],
+        "icon": "server",
+        "name": "backend-demo"
       },
       {
         "autoExecuteCommands": true,

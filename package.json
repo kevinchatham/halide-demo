@@ -9,7 +9,7 @@
     "projects/*"
   ],
   "scripts": {
-    "kill": "fuser -k -n tcp 3553",
+    "kill": "fuser -k -n tcp 3000 && fuser -k -n tcp 3553",
     "lint:fix": "biome check --config-path biome.json  --write . && prettier --write . --config .prettierrc --ignore-path .prettierignore",
     "lint:watch": "nodemon --exec 'npm run lint:fix' --watch '**/*.ts' --watch '**/*.json' --ext '.ts,.json'",
     "lint": "biome check --config-path biome.json .",

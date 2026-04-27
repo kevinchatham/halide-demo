@@ -1,15 +1,18 @@
 {
+  "author": "kevinchatham",
+  "description": "",
+  "license": "MIT",
   "name": "angular",
-  "version": "0.0.0",
+  "private": true,
   "type": "module",
+  "version": "1.0.0",
   "scripts": {
     "build": "ng build && tsc --project tsconfig.server.json",
     "halide:start": "npm run build && node dist/server.js",
-    "serve": "ng serve",
+    "serve:angular": "ng serve",
+    "serve": "nodemon",
     "test": "ng test"
   },
-  "private": true,
-  "packageManager": "npm@11.8.0",
   "dependencies": {
     "@angular/common": "^21.2.0",
     "@angular/compiler": "^21.2.0",

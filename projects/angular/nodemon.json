@@ -1,0 +1,6 @@
+{
+  "exec": "npm run halide:start",
+  "ext": "ts,css,html,json",
+  "ignore": ["dist", "node_modules", ".angular"],
+  "watch": ["server.ts", "src"]
+}

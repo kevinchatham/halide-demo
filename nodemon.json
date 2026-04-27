@@ -1,6 +1,0 @@
-{
-  "exec": "npm run build",
-  "ext": "ts,json",
-  "ignore": ["dist", "node_modules"],
-  "watch": ["projects"]
-}

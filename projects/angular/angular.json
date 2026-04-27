@@ -4,7 +4,6 @@
     "packageManager": "npm"
   },
   "newProjectRoot": "projects",
-      "prefix": "app",
   "projects": {
     "angular": {
       "architect": {
@@ -58,14 +57,12 @@
             }
           },
           "defaultConfiguration": "development"
-        }
-          },
-          "defaultConfiguration": "development"
         },
         "test": {
           "builder": "@angular/build:unit-test"
         }
       },
+      "prefix": "app",
       "projectType": "application",
       "root": "",
       "schematics": {},

@@ -12,7 +12,7 @@ const server = createServer({
   spa: {
     name: 'backend',
     port: 3000,
-    root: 'public',
+    root: 'src/public',
   },
 });
 
