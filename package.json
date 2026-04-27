@@ -13,7 +13,8 @@
     "lint:fix": "biome check --config-path biome.json  --write . && prettier --write . --config .prettierrc --ignore-path .prettierignore",
     "lint:watch": "nodemon --exec 'npm run lint:fix' --watch '**/*.ts' --watch '**/*.json' --ext '.ts,.json'",
     "lint": "biome check --config-path biome.json .",
-    "skills": "npx skills update"
+    "skills:update": "npx skills update",
+    "skills:link": "rm -rf .kilo/skills/halide && ln -s ../../.agents/skills/halide .kilo/skills/halide"
   },
   "dependencies": {
     "halide": "^0.0.7",
