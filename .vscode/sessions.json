@@ -1,0 +1,50 @@
+{
+  "$schema": "https://cdn.statically.io/gh/nguyenngoclongdev/cdn/main/schema/v11/terminal-keeper.json",
+  "activateOnStartup": true,
+  "active": "dev",
+  "keepExistingTerminals": false,
+  "sessions": {
+    "default": [
+      {
+        "color": "terminal.ansiBlue",
+        "commands": [],
+        "focus": false,
+        "icon": "terminal",
+        "name": "terminal"
+      }
+    ],
+    "dev": [
+      {
+        "autoExecuteCommands": true,
+        "color": "terminal.ansiGreen",
+        "commands": ["npx nodemon"],
+        "icon": "sync",
+        "name": "build:watch"
+      },
+      {
+        "autoExecuteCommands": true,
+        "color": "terminal.ansiMagenta",
+        "commands": [
+          "npx concurrently --names \"angular,backend\" --prefix-colors \"blue,magenta\" \"npm run demo:angular:serve:server\" \"npm run demo:backend:serve\""
+        ],
+        "icon": "browser",
+        "name": "demos"
+      },
+      {
+        "autoExecuteCommands": true,
+        "color": "terminal.ansiYellow",
+        "commands": ["npm run lint:watch"],
+        "icon": "check",
+        "name": "lint"
+      },
+      {
+        "color": "terminal.ansiCyan",
+        "commands": [],
+        "focus": false,
+        "icon": "console",
+        "name": "terminal"
+      }
+    ]
+  },
+  "theme": "chaos"
+}
