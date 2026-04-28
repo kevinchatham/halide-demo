@@ -16,7 +16,7 @@
     "lint:watch": "nodemon --exec 'npm run lint:fix' --watch '**/*.ts' --watch '**/*.json' --ext '.ts,.json'",
     "lint": "biome check --config-path biome.json .",
     "skills:link": "rm -rf .kilo/skills/halide && ln -s ../../.agents/skills/halide .kilo/skills/halide",
-    "skills:update": "npx skills update"
+    "skills:update": "halide init --skills-only"
   },
   "dependencies": {
     "halide": "^0.0.9",
