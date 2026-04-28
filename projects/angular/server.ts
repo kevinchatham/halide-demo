@@ -9,6 +9,11 @@ const server = createServer({
       path: '/health',
     }),
   ],
+  app: {
+    name: 'angular',
+    port: 3553,
+    root: 'dist/angular/browser',
+  },
   observability: {
     logger: {
       debug: (...args: unknown[]) => {
@@ -24,11 +29,6 @@ const server = createServer({
         console.log(args);
       },
     },
-  },
-  spa: {
-    name: 'angular',
-    port: 3553,
-    root: 'dist/angular/browser',
   },
 });
 

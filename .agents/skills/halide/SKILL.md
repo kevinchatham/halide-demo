@@ -88,4 +88,4 @@ For complete type information, read:
 
 - `node_modules/halide/dist/index.d.ts` — Type definitions
 - `node_modules/halide/dist/index.js` — Implementation
-- `node_modules/halide/dist/docs/` — Documentation
+- `node_modules/halide/dist/docs/*.md` — Documentation
