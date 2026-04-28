@@ -1,9 +1,9 @@
 import type {
+  AppConfig,
   ObservabilityConfig,
   OpenApiConfig,
   SecurityConfig,
   ServerConfig,
-  SpaConfig,
 } from 'halide';
 import pkg from '../../package.json';
 import { DEMO_BEARER_AUDIENCE, DEMO_BEARER_SECRET } from './const';
@@ -48,7 +48,7 @@ const security: SecurityConfig = {
   },
 };
 
-const spa: SpaConfig = {
+const app: AppConfig = {
   name: 'backend',
   port: 3000,
   root: 'src/public',
@@ -56,8 +56,8 @@ const spa: SpaConfig = {
 
 export const config: ServerConfig = {
   apiRoutes,
+  app,
   observability,
   openapi,
   security,
-  spa,
 };

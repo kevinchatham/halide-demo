@@ -10,6 +10,8 @@ export const UserListSchema = z.array(UserSchema);
 
 export type User = z.infer<typeof UserSchema>;
 
+export type UserList = z.infer<typeof UserListSchema>;
+
 export async function getUsersRouteHandler(): Promise<User[]> {
   return [
     { email: 'alice@example.com', id: 1, name: 'Alice' },

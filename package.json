@@ -9,15 +9,17 @@
     "projects/*"
   ],
   "scripts": {
+    "halide:link": "npm link halide",
+    "halide:unlink": "npm unlink halide",
     "kill": "fuser -k -n tcp 3000 && fuser -k -n tcp 3553",
     "lint:fix": "biome check --config-path biome.json  --write . && prettier --write . --config .prettierrc --ignore-path .prettierignore",
     "lint:watch": "nodemon --exec 'npm run lint:fix' --watch '**/*.ts' --watch '**/*.json' --ext '.ts,.json'",
     "lint": "biome check --config-path biome.json .",
-    "skills:update": "npx skills update",
-    "skills:link": "rm -rf .kilo/skills/halide && ln -s ../../.agents/skills/halide .kilo/skills/halide"
+    "skills:link": "rm -rf .kilo/skills/halide && ln -s ../../.agents/skills/halide .kilo/skills/halide",
+    "skills:update": "npx skills update"
   },
   "dependencies": {
-    "halide": "^0.0.7",
+    "halide": "^0.0.9",
     "jose": "^6.2.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

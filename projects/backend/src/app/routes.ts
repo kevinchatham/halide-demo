@@ -1,58 +1,46 @@
 import { type ApiRoute, apiRoute } from 'halide';
-import { getUsersRouteHandler, UserListSchema } from '../handlers/get-users-route.handler';
-import { HealthResponseSchema, healthRouteHandler } from '../handlers/health-route.handler';
 import {
+  getUsersRouteHandler,
+  type UserList,
+  UserListSchema,
+} from '../handlers/get-users-route.handler';
+import {
+  type HealthResponse,
+  HealthResponseSchema,
+  healthRouteHandler,
+} from '../handlers/health-route.handler';
+import {
+  type Claims,
   type LoginRequest,
+  LoginRequestSchema,
+  type LoginResponse,
   LoginResponseSchema,
   loginRouteHandler,
 } from '../handlers/login-route.handler';
 
-const healthRoute = apiRoute({
+const healthRoute = apiRoute<unknown, unknown, HealthResponse>({
   access: 'public',
   handler: healthRouteHandler,
   method: 'get',
-  openapi: {
-    description: 'Check the health status of the API',
-    responseSchema: HealthResponseSchema,
-    responses: {
-      200: { description: 'Health check passed' },
-    },
-    summary: 'Health check',
-    tags: ['System'],
-  },
   path: '/api/health',
+  responseSchema: HealthResponseSchema,
 });
 
-const loginRoute = apiRoute<unknown, LoginRequest>({
+const loginRoute = apiRoute<unknown, LoginRequest, LoginResponse>({
   access: 'public',
   handler: loginRouteHandler,
   method: 'post',
-  openapi: {
-    description: 'Authenticate and receive a JWT bearer token',
-    responseSchema: LoginResponseSchema,
-    responses: {
-      200: { description: 'Successfully authenticated, returns JWT token' },
-    },
-    summary: 'Login and get token',
-    tags: ['Auth'],
-  },
   path: '/api/login',
+  requestSchema: LoginRequestSchema,
+  responseSchema: LoginResponseSchema,
 });
 
-const getUsersRoute = apiRoute({
+const getUsersRoute = apiRoute<Claims, unknown, UserList>({
   access: 'private',
   handler: getUsersRouteHandler,
   method: 'get',
-  openapi: {
-    description: 'Get a list of all users',
-    responseSchema: UserListSchema,
-    responses: {
-      200: { description: 'Successfully retrieved user list' },
-    },
-    summary: 'Get all users',
-    tags: ['Users'],
-  },
   path: '/api/users',
+  responseSchema: UserListSchema,
 });
 
 // biome-ignore lint/suspicious/noExplicitAny: group
