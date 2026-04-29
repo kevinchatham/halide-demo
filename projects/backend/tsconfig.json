@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
-    "module": "es2022",
-    "moduleResolution": "bundler",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "module": "commonjs",
     "outDir": "./dist",
-    "rootDir": "./src",
-    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "strict": true,
     "target": "es2022",
     "types": ["node"]
   },

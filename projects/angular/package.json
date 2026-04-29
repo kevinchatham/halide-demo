@@ -4,7 +4,6 @@
   "license": "MIT",
   "name": "angular",
   "private": true,
-  "type": "module",
   "version": "1.0.0",
   "scripts": {
     "build": "ng build && tsc --project tsconfig.server.json",

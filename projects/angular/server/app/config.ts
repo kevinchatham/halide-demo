@@ -6,7 +6,6 @@ import type {
   ServerConfig,
 } from 'halide';
 import pkg from '../../package.json';
-import { DEMO_BEARER_AUDIENCE, DEMO_BEARER_SECRET } from './const';
 import { apiRoutes } from './routes';
 
 const observability: ObservabilityConfig = {
@@ -30,27 +29,22 @@ const openapi: OpenApiConfig = {
   enabled: true,
   options: {
     description: '',
-    title: 'halide-demo-backend',
+    title: 'halide-demo-angular',
     version: pkg.version,
   },
   path: '/swagger',
 };
 
 const security: SecurityConfig = {
-  auth: {
-    audience: DEMO_BEARER_AUDIENCE,
-    secret: () => DEMO_BEARER_SECRET,
-    strategy: 'bearer',
-  },
   cors: {
     credentials: true,
-    origin: ['http://localhost:4200', 'http://localhost:3553'],
+    origin: ['http://localhost:4200'],
   },
 };
 
 const app: AppConfig = {
-  name: 'backend',
-  port: 3000,
+  name: 'angular',
+  root: 'dist/angular/browser',
 };
 
 export const config: ServerConfig = {

@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
-    "module": "es2022",
-    "moduleResolution": "bundler",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "module": "commonjs",
     "outDir": "./dist",
-    "rootDirs": ["."],
-    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "strict": true,
     "target": "es2022",
     "types": ["node"]
   },
-  "include": ["server.ts"]
+  "include": ["server.ts", "server/**/*.ts"]
 }
