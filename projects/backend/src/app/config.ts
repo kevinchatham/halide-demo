@@ -12,16 +12,16 @@ import { apiRoutes } from './routes';
 const observability: ObservabilityConfig = {
   logger: {
     debug: (...args: unknown[]) => {
-      console.log(args);
+      console.log(...args);
     },
     error: (...args: unknown[]) => {
-      console.log(args);
+      console.log(...args);
     },
     info: (...args: unknown[]) => {
-      console.log(args);
+      console.log(...args);
     },
     warn: (...args: unknown[]) => {
-      console.log(args);
+      console.log(...args);
     },
   },
 };

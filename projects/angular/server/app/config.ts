@@ -6,21 +6,21 @@ import type {
   ServerConfig,
 } from 'halide';
 import pkg from '../../package.json';
-import { apiRoutes } from './routes';
+import { apiRoutes, proxyRoutes } from './routes';
 
 const observability: ObservabilityConfig = {
   logger: {
     debug: (...args: unknown[]) => {
-      console.log(args);
+      console.log(...args);
     },
     error: (...args: unknown[]) => {
-      console.log(args);
+      console.log(...args);
     },
     info: (...args: unknown[]) => {
-      console.log(args);
+      console.log(...args);
     },
     warn: (...args: unknown[]) => {
-      console.log(args);
+      console.log(...args);
     },
   },
 };
@@ -44,7 +44,7 @@ const security: SecurityConfig = {
 
 const app: AppConfig = {
   name: 'angular',
-  root: 'dist/angular/browser',
+  root: `dist/angular/browser`,
 };
 
 export const config: ServerConfig = {
@@ -52,5 +52,6 @@ export const config: ServerConfig = {
   app,
   observability,
   openapi,
+  proxyRoutes,
   security,
 };
