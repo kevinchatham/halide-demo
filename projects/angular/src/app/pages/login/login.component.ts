@@ -1,35 +1,38 @@
 import { Component, inject, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormField, form, submit, validateStandardSchema } from '@angular/forms/signals';
 import { Router } from '@angular/router';
+import { type LoginRequest, LoginSchema } from 'shared';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
-  imports: [FormsModule],
+  imports: [FormField],
   selector: 'app-login',
-  styleUrl: './login.component.css',
   templateUrl: './login.component.html',
 })
 export class LoginComponent {
-  private authService = inject(AuthService);
-  private router = inject(Router);
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
 
-  username = '';
-  password = '';
-  loading = signal(false);
-  error = signal<string | null>(null);
+  readonly model = signal<LoginRequest>({ password: '', username: '' });
+  readonly error = signal<string | null>(null);
+
+  readonly loginForm = form(this.model, (schemaPath) => {
+    validateStandardSchema(schemaPath, LoginSchema);
+  });
 
   async onSubmit(): Promise<void> {
-    this.loading.set(true);
     this.error.set(null);
 
-    const success = await this.authService.login(this.username, this.password);
-
-    if (success) {
-      this.router.navigate(['/users']);
-    } else {
-      this.error.set('Invalid username or password');
-    }
-
-    this.loading.set(false);
+    await submit(this.loginForm, async (field) => {
+      const result = await this.authService.login(
+        field().value().username,
+        field().value().password,
+      );
+      if (!result) {
+        return { kind: 'serverError', message: 'Invalid username or password' };
+      }
+      await this.router.navigate(['/users']);
+      return undefined;
+    });
   }
 }

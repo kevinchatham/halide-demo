@@ -30,6 +30,13 @@
       },
       {
         "autoExecuteCommands": true,
+        "color": "terminal.ansiWhite",
+        "commands": ["cd projects/shared", "npm run serve"],
+        "icon": "refresh",
+        "name": "shared-package"
+      },
+      {
+        "autoExecuteCommands": true,
         "color": "terminal.ansiYellow",
         "commands": ["npm run lint:watch"],
         "icon": "check",

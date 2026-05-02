@@ -1,4 +1,4 @@
-import { type ApiRoute, apiRoute, type ProxyRoute, proxyRoute } from 'halide';
+import { apiRoute, proxyRoute } from 'halide';
 import {
   type HealthResponse,
   HealthResponseSchema,
@@ -25,5 +25,5 @@ export const backendProxyRoute = proxyRoute({
   }),
 });
 
-export const apiRoutes: ApiRoute[] = [healthRoute];
-export const proxyRoutes: ProxyRoute[] = [backendProxyRoute];
+export const apiRoutes = [healthRoute];
+export const proxyRoutes = [backendProxyRoute];

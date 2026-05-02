@@ -1,111 +1,90 @@
-<div class="min-h-screen bg-gray-100 py-8 px-4">
+<div class="min-h-screen bg-zinc-950 py-8 px-4">
   <div class="max-w-6xl mx-auto">
-    <header class="flex justify-between items-center mb-8">
-      <h1 class="text-3xl font-bold text-gray-800">Users Dashboard</h1>
-      <button
-        type="button"
-        (click)="logout()"
-        class="px-4 py-2 bg-red-600 text-white font-medium rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors"
-      >
-        Logout
-      </button>
-    </header>
+    <div class="bg-zinc-900/50 border border-zinc-700 rounded-lg p-6 mb-8">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <h1 class="text-2xl font-bold text-slate-50 mb-3 flex items-center gap-3">
+            Angular Halide BFF Demo
+            <img src="halide-logo.png" alt="Halide Logo" class="h-8" />
+          </h1>
+          <p class="text-slate-400 leading-relaxed">
+            This page is powered by Halide, a declarative BFF runtime with built-in auth, proxy
+            routing, CSP, and OpenAPI support. The frontend leverages Angular 21 Signal Forms with
+            Zod validation, using shared schemas that drive both the UI and the Halide backend API.
+          </p>
+        </div>
+      </div>
+    </div>
 
     @if (error()) {
-      <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md mb-6">
+      <div class="bg-red-900/30 border border-red-700 text-red-400 px-4 py-3 rounded-md mb-6">
         {{ error() }}
       </div>
     }
 
-    <section class="bg-white rounded-lg shadow-md p-6 mb-8">
-      <div class="flex justify-between items-center mb-4">
-        <h2 class="text-xl font-semibold text-gray-800">Users</h2>
-        <button
-          type="button"
-          (click)="loadUsers()"
-          [disabled]="loading()"
-          class="px-4 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
-        >
-          Refresh
-        </button>
+    <section class="bg-zinc-900 rounded-lg shadow-md p-6 mb-8 border border-zinc-700">
+      <div class="flex items-start justify-between mb-6">
+        <h2 class="text-xl font-semibold text-slate-50">
+          {{ editingUser() ? 'Edit User' : 'Create User' }}
+        </h2>
+        <div class="shrink-0 flex gap-4">
+          <a
+            [href]="routes.docs"
+            target="_blank"
+            class="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900 transition-colors"
+          >
+            Angular Demo Docs
+          </a>
+          <a
+            [href]="`http://localhost:3000${routes.docs}`"
+            target="_blank"
+            class="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900 transition-colors"
+          >
+            Backend Demo Docs
+          </a>
+          <button
+            type="button"
+            (click)="logout()"
+            class="px-4 py-2 bg-zinc-700 text-white text-sm font-medium rounded-md hover:bg-zinc-600 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2 focus:ring-offset-zinc-900 transition-colors"
+          >
+            Logout
+          </button>
+        </div>
       </div>
 
-      <table class="w-full">
-        <thead>
-          <tr class="border-b border-gray-200">
-            <th class="text-left py-3 px-4 text-sm font-semibold text-gray-600">ID</th>
-            <th class="text-left py-3 px-4 text-sm font-semibold text-gray-600">Name</th>
-            <th class="text-left py-3 px-4 text-sm font-semibold text-gray-600">Email</th>
-            <th class="text-left py-3 px-4 text-sm font-semibold text-gray-600">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (user of users(); track user.id) {
-            <tr class="border-b border-gray-100 hover:bg-gray-50">
-              <td class="py-3 px-4 text-sm text-gray-700">{{ user.id }}</td>
-              <td class="py-3 px-4 text-sm text-gray-700">{{ user.name }}</td>
-              <td class="py-3 px-4 text-sm text-gray-700">{{ user.email }}</td>
-              <td class="py-3 px-4">
-                <button
-                  type="button"
-                  (click)="editUser(user)"
-                  class="px-3 py-1 bg-yellow-500 text-white text-sm font-medium rounded hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 mr-2 transition-colors"
-                >
-                  Edit
-                </button>
-                <button
-                  type="button"
-                  (click)="confirmDelete(user)"
-                  class="px-3 py-1 bg-red-600 text-white text-sm font-medium rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          } @empty {
-            <tr>
-              <td colspan="4" class="py-8 text-center text-gray-500">No users found</td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </section>
-
-    <section class="bg-white rounded-lg shadow-md p-6">
-      <h2 class="text-xl font-semibold text-gray-800 mb-6">
-        {{ editingUser() ? 'Edit User' : 'Create User' }}
-      </h2>
-
-      <form (ngSubmit)="saveUser()" class="max-w-md space-y-4">
+      <form class="max-w-md space-y-4">
         <div>
-          <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+          <label for="name" class="block text-sm font-medium text-slate-300 mb-1">Name</label>
           <input
             id="name"
             type="text"
-            [(ngModel)]="formData.name"
-            name="name"
-            required
-            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [formField]="userForm.name!"
+            class="w-full px-4 py-2 border border-zinc-700 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-zinc-800 text-slate-50 placeholder-slate-400"
           />
+          @if (userForm.name!().invalid() && userForm.name!().touched()) {
+            <p class="text-red-400 text-sm mt-1">Invalid name</p>
+          }
         </div>
 
         <div>
-          <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+          <label for="email" class="block text-sm font-medium text-slate-300 mb-1">Email</label>
           <input
             id="email"
             type="email"
-            [(ngModel)]="formData.email"
-            name="email"
-            required
-            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [formField]="userForm.email!"
+            class="w-full px-4 py-2 border border-zinc-700 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-zinc-800 text-slate-50 placeholder-slate-400"
           />
+          @if (userForm.email!().invalid() && userForm.email!().touched()) {
+            <p class="text-red-400 text-sm mt-1">Invalid email</p>
+          }
         </div>
 
         <div class="flex gap-4 pt-2">
           <button
-            type="submit"
-            [disabled]="saving()"
-            class="px-6 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+            type="button"
+            (click)="saveUser()"
+            [disabled]="userForm().submitting()"
+            class="px-6 py-2 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:bg-zinc-700 disabled:cursor-not-allowed transition-colors"
           >
             {{ editingUser() ? 'Update' : 'Create' }}
           </button>
@@ -114,13 +93,55 @@
             <button
               type="button"
               (click)="cancelEdit()"
-              class="px-6 py-2 bg-gray-600 text-white font-medium rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors"
+              class="px-6 py-2 bg-zinc-700 text-white font-medium rounded-md hover:bg-zinc-600 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2 focus:ring-offset-zinc-900 transition-colors"
             >
               Cancel
             </button>
           }
         </div>
       </form>
+    </section>
+
+    <section class="bg-zinc-900 rounded-lg shadow-md p-6 border border-zinc-700">
+      <table class="w-full">
+        <thead>
+          <tr class="border-b border-zinc-700">
+            <th class="text-left py-3 px-4 text-sm font-semibold text-slate-300">ID</th>
+            <th class="text-left py-3 px-4 text-sm font-semibold text-slate-300">Name</th>
+            <th class="text-left py-3 px-4 text-sm font-semibold text-slate-300">Email</th>
+            <th class="text-left py-3 px-4 text-sm font-semibold text-slate-300">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (user of users(); track user.id) {
+            <tr class="border-b border-zinc-800 hover:bg-zinc-800">
+              <td class="py-3 px-4 text-sm text-slate-300">{{ user.id }}</td>
+              <td class="py-3 px-4 text-sm text-slate-300">{{ user.name }}</td>
+              <td class="py-3 px-4 text-sm text-slate-300">{{ user.email }}</td>
+              <td class="py-3 px-4">
+                <button
+                  type="button"
+                  (click)="editUser(user)"
+                  class="px-3 py-1 bg-indigo-600 text-white text-sm font-medium rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-zinc-900 mr-2 transition-colors"
+                >
+                  Edit
+                </button>
+                <button
+                  type="button"
+                  (click)="delete(user)"
+                  class="px-3 py-1 bg-rose-600 text-white text-sm font-medium rounded hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 focus:ring-offset-zinc-900 transition-colors"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="4" class="py-8 text-center text-slate-500">No users found</td>
+            </tr>
+          }
+        </tbody>
+      </table>
     </section>
   </div>
 </div>

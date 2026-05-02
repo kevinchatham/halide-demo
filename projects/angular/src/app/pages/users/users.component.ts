@@ -1,34 +1,32 @@
 import { Component, inject, type OnInit, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormField, form, submit, validateStandardSchema } from '@angular/forms/signals';
+import { type CreateUserRequest, CreateUserSchema, routes, type UserResponse } from 'shared';
 import { AuthService } from '../../services/auth.service';
-
-interface User {
-  email: string;
-  id: number;
-  name: string;
-}
+import { UsersService } from '../../services/users.service';
 
 @Component({
-  imports: [FormsModule],
+  imports: [FormField],
   selector: 'app-users',
-  styleUrl: './users.component.css',
   templateUrl: './users.component.html',
 })
 export class UsersComponent implements OnInit {
-  private authService = inject(AuthService);
+  private readonly authService = inject(AuthService);
+  private readonly usersService = inject(UsersService);
 
-  users = signal<User[]>([]);
-  loading = signal(false);
-  saving = signal(false);
-  error = signal<string | null>(null);
-  editingUser = signal<User | null>(null);
+  readonly routes = routes;
+  readonly users = signal<UserResponse[]>([]);
+  readonly loading = signal(false);
+  readonly error = signal<string | null>(null);
+  readonly editingUser = signal<UserResponse | null>(null);
 
-  formData = { email: '', name: '' };
+  readonly model = signal<CreateUserRequest>({ email: '', name: '' });
 
-  private readonly API_URL = '/api';
+  readonly userForm = form(this.model, (schemaPath) => {
+    validateStandardSchema(schemaPath, CreateUserSchema);
+  });
 
-  async ngOnInit(): Promise<void> {
-    await this.loadUsers();
+  ngOnInit(): void {
+    this.loadUsers();
   }
 
   async loadUsers(): Promise<void> {
@@ -36,16 +34,8 @@ export class UsersComponent implements OnInit {
     this.error.set(null);
 
     try {
-      const response = await fetch(`${this.API_URL}/users`, {
-        headers: this.authService.getAuthHeaders(),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to load users');
-      }
-
-      const data = await response.json();
-      this.users.set(data);
+      const users = await this.usersService.getUsers();
+      this.users.set(users);
     } catch (err) {
       this.error.set(err instanceof Error ? err.message : 'An error occurred');
     }
@@ -53,62 +43,38 @@ export class UsersComponent implements OnInit {
     this.loading.set(false);
   }
 
-  editUser(user: User): void {
+  editUser(user: UserResponse): void {
     this.editingUser.set(user);
-    this.formData = { email: user.email, name: user.name };
+    this.model.set({ email: user.email!, name: user.name! });
   }
 
   cancelEdit(): void {
     this.editingUser.set(null);
-    this.formData = { email: '', name: '' };
+    this.model.set({ email: '', name: '' });
+    this.userForm().reset();
   }
 
   async saveUser(): Promise<void> {
-    this.saving.set(true);
+    const editing = this.editingUser();
+
     this.error.set(null);
 
-    const editing = this.editingUser();
-    const method = editing ? 'PUT' : 'POST';
-    const url = editing ? `${this.API_URL}/users/${editing.id}` : `${this.API_URL}/users`;
-
-    try {
-      const response = await fetch(url, {
-        body: JSON.stringify(this.formData),
-        headers: {
-          'Content-Type': 'application/json',
-          ...this.authService.getAuthHeaders(),
-        },
-        method,
-      });
-
-      if (!response.ok) {
-        throw new Error(`Failed to ${editing ? 'update' : 'create'} user`);
+    await submit(this.userForm, async (field) => {
+      if (editing) {
+        await this.usersService.updateUser(editing.id!, field().value());
+      } else {
+        await this.usersService.createUser(field().value());
       }
-
       this.cancelEdit();
       await this.loadUsers();
-    } catch (err) {
-      this.error.set(err instanceof Error ? err.message : 'An error occurred');
-    }
-
-    this.saving.set(false);
+    });
   }
 
-  async confirmDelete(user: User): Promise<void> {
-    if (!confirm(`Delete user ${user.name}?`)) return;
-
+  async delete(user: UserResponse): Promise<void> {
     this.error.set(null);
 
     try {
-      const response = await fetch(`${this.API_URL}/users/${user.id}`, {
-        headers: this.authService.getAuthHeaders(),
-        method: 'DELETE',
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to delete user');
-      }
-
+      await this.usersService.deleteUser(user.id!);
       await this.loadUsers();
     } catch (err) {
       this.error.set(err instanceof Error ? err.message : 'An error occurred');

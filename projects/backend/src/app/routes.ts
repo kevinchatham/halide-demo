@@ -1,4 +1,5 @@
 import { type ApiRoute, apiRoute } from 'halide';
+import { routes } from 'shared';
 import { createUserHandler } from '../handlers/create-user-route.handler';
 import { deleteUserHandler } from '../handlers/delete-user-route.handler';
 import { getUserByIdHandler } from '../handlers/get-user-by-id-route.handler';
@@ -28,7 +29,7 @@ const healthRoute = apiRoute<unknown, unknown, HealthResponse>({
   access: 'public',
   handler: healthRouteHandler,
   method: 'get',
-  path: '/api/health',
+  path: routes.health,
   responseSchema: HealthResponseSchema,
 });
 
@@ -36,7 +37,7 @@ const loginRoute = apiRoute<unknown, LoginRequest, LoginResponse>({
   access: 'public',
   handler: loginRouteHandler,
   method: 'post',
-  path: '/api/login',
+  path: routes.login,
   requestSchema: LoginRequestSchema,
   responseSchema: LoginResponseSchema,
 });
@@ -45,7 +46,7 @@ const getUsersRoute = apiRoute<Claims, unknown, UserListResponse>({
   access: 'private',
   handler: getUsersRouteHandler,
   method: 'get',
-  path: '/api/users',
+  path: routes.users,
   responseSchema: UserListSchema,
 });
 
@@ -53,14 +54,14 @@ const getUserByIdRoute = apiRoute<Claims, unknown, UserResponse>({
   access: 'private',
   handler: getUserByIdHandler,
   method: 'get',
-  path: '/api/users/:id',
+  path: routes.userById(':id'),
 });
 
 const createUserRoute = apiRoute<Claims, CreateUserRequest, UserResponse>({
   access: 'private',
   handler: createUserHandler,
   method: 'post',
-  path: '/api/users',
+  path: routes.users,
   requestSchema: CreateUserSchema,
   responseSchema: UserSchema,
 });
@@ -69,7 +70,7 @@ const updateUserRoute = apiRoute<Claims, UpdateUserRequest, UserResponse>({
   access: 'private',
   handler: updateUserHandler,
   method: 'put',
-  path: '/api/users/:id',
+  path: routes.userById(':id'),
   requestSchema: UpdateUserSchema,
   responseSchema: UserSchema,
 });
@@ -78,7 +79,7 @@ const deleteUserRoute = apiRoute<Claims, unknown, { success: boolean }>({
   access: 'private',
   handler: deleteUserHandler,
   method: 'delete',
-  path: '/api/users/:id',
+  path: routes.userById(':id'),
 });
 
 // TypeScript cannot express "an array of ApiRoute where each route carries its own generics"

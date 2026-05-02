@@ -5,6 +5,7 @@ import type {
   SecurityConfig,
   ServerConfig,
 } from 'halide';
+import { routes } from 'shared';
 import pkg from '../../package.json';
 import { DEMO_BEARER_AUDIENCE, DEMO_BEARER_SECRET } from './const';
 import { apiRoutes } from './routes';
@@ -34,7 +35,7 @@ const openapi: OpenApiConfig = {
     title: 'halide-demo-backend',
     version: pkg.version,
   },
-  path: '/swagger',
+  path: routes.backendDocs,
 };
 
 const security: SecurityConfig = {
@@ -46,17 +47,6 @@ const security: SecurityConfig = {
   cors: {
     credentials: true,
     origin: ['http://localhost:4200', 'http://localhost:3553'],
-  },
-  csp: {
-    directives: {
-      defaultSrc: ["'self'"],
-      formAction: ["'self'"],
-      imgSrc: ["'self'", 'data:'],
-      objectSrc: ["'none'"],
-      scriptSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
-      upgradeInsecureRequests: [],
-    },
   },
 };
 

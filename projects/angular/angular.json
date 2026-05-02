@@ -33,6 +33,7 @@
           },
           "defaultConfiguration": "production",
           "options": {
+            "allowedCommonJsDependencies": ["shared"],
             "assets": [
               {
                 "glob": "**/*",

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
+import { routes } from 'shared';
 
 export interface LoginRequest {
   password: string;
@@ -15,17 +16,18 @@ export interface LoginResponse {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly TOKEN_KEY = 'halide_demo_token';
-  private readonly API_URL = '/api';
   private readonly http = inject(HttpClient);
   private readonly router = inject(Router);
 
   readonly token = signal<string | null>(localStorage.getItem(this.TOKEN_KEY));
   readonly isAuthenticated = signal<boolean>(!!localStorage.getItem(this.TOKEN_KEY));
 
-  async login(username: string, password: string): Promise<boolean> {
+  async login(username?: string, password?: string): Promise<boolean> {
+    if (!username || !password) return false;
+
     try {
       const response = await firstValueFrom(
-        this.http.post<LoginResponse>(`${this.API_URL}/login`, { password, username }),
+        this.http.post<LoginResponse>(routes.login, { password, username }),
       );
       localStorage.setItem(this.TOKEN_KEY, response.token);
       this.token.set(response.token);

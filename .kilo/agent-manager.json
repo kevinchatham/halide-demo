@@ -1,7 +1,16 @@
 {
-  "sessions": {},
+  "sessions": {
+    "ses_219a8db20ffeWnp3vFl3fjCZmY": {
+      "createdAt": "2026-05-02T01:39:24.040Z",
+      "worktreeId": null
+    },
+    "ses_219a82d1effevs97lPZzFfZWsz": {
+      "createdAt": "2026-05-02T01:40:08.691Z",
+      "worktreeId": null
+    }
+  },
   "tabOrder": {
-    "local": ["pending:1"]
+    "local": ["ses_219a8db20ffeWnp3vFl3fjCZmY", "ses_219a82d1effevs97lPZzFfZWsz"]
   },
   "worktrees": {}
 }

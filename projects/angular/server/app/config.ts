@@ -5,6 +5,7 @@ import type {
   SecurityConfig,
   ServerConfig,
 } from 'halide';
+import { routes } from 'shared';
 import pkg from '../../package.json';
 import { apiRoutes, proxyRoutes } from './routes';
 
@@ -32,7 +33,7 @@ const openapi: OpenApiConfig = {
     title: 'halide-demo-angular',
     version: pkg.version,
   },
-  path: '/swagger',
+  path: routes.docs,
 };
 
 const security: SecurityConfig = {
