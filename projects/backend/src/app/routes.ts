@@ -1,4 +1,4 @@
-import { type ApiRoute, apiRoute } from 'halide';
+import { type ApiRoute, apiRoute, type THalideApp } from 'halide';
 import {
   type Claims,
   type CreateUserRequest,
@@ -25,6 +25,8 @@ import { getUsersRouteHandler } from '../handlers/get-users-route.handler';
 import { loginRouteHandler } from '../handlers/login-route.handler';
 import { updateUserHandler } from '../handlers/update-user-route.handler';
 
+type App = THalideApp<Claims>;
+
 const healthRoute = apiRoute<unknown, unknown, HealthResponse>({
   access: 'public',
   handler: healthRouteHandler,
@@ -42,7 +44,7 @@ const loginRoute = apiRoute<unknown, LoginRequest, LoginResponse>({
   responseSchema: LoginResponseSchema,
 });
 
-const getUsersRoute = apiRoute<Claims, unknown, UserListResponse>({
+const getUsersRoute = apiRoute<App, unknown, UserListResponse>({
   access: 'private',
   handler: getUsersRouteHandler,
   method: 'get',
@@ -50,14 +52,14 @@ const getUsersRoute = apiRoute<Claims, unknown, UserListResponse>({
   responseSchema: UserListSchema,
 });
 
-const getUserByIdRoute = apiRoute<Claims, unknown, UserResponse>({
+const getUserByIdRoute = apiRoute<App, unknown, UserResponse>({
   access: 'private',
   handler: getUserByIdHandler,
   method: 'get',
   path: routes.userById(':id'),
 });
 
-const createUserRoute = apiRoute<Claims, CreateUserRequest, UserResponse>({
+const createUserRoute = apiRoute<App, CreateUserRequest, UserResponse>({
   access: 'private',
   handler: createUserHandler,
   method: 'post',
@@ -66,7 +68,7 @@ const createUserRoute = apiRoute<Claims, CreateUserRequest, UserResponse>({
   responseSchema: UserSchema,
 });
 
-const updateUserRoute = apiRoute<Claims, UpdateUserRequest, UserResponse>({
+const updateUserRoute = apiRoute<App, UpdateUserRequest, UserResponse>({
   access: 'private',
   handler: updateUserHandler,
   method: 'put',
@@ -75,28 +77,14 @@ const updateUserRoute = apiRoute<Claims, UpdateUserRequest, UserResponse>({
   responseSchema: UserSchema,
 });
 
-const deleteUserRoute = apiRoute<Claims, unknown, { success: boolean }>({
+const deleteUserRoute = apiRoute<App, unknown, { success: boolean }>({
   access: 'private',
   handler: deleteUserHandler,
   method: 'delete',
   path: routes.userById(':id'),
 });
 
-// TypeScript cannot express "an array of ApiRoute where each route carries its own generics"
-//
-// Two fields make ApiRoute contravariant in TClaims (function parameters are contravariant):
-//
-// 1. `handler`: claims: TClaims | undefined appears in parameter position
-// 2. `authorize`: claims: TClaims | undefined appears in parameter position
-//
-// When routes are collected into an array typed as ApiRoute[], TypeScript erases each
-// route's individual generics. ApiRoute<any, any>[] is used as a permissive container,
-// but this is not equivalent to "existential generics" — TypeScript lacks that feature.
-//
-// Per-route generics are preserved at the apiRoute() factory call site.
-//
-// biome-ignore lint/suspicious/noExplicitAny: see above
-export const apiRoutes: ApiRoute<any, any>[] = [
+export const apiRoutes: ApiRoute<App>[] = [
   healthRoute,
   loginRoute,
   getUsersRoute,

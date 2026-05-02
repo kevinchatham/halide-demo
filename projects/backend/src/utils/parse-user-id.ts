@@ -1,17 +1,19 @@
-import type { RequestContext } from 'halide';
-import type { Logger } from 'shared';
+import type { RequestContext, THalideApp } from 'halide';
+import type { Claims } from 'shared';
 import { HttpError } from './http-error';
 
-export function parseUserId(ctx: RequestContext, logger: Logger): number {
+type App = THalideApp<Claims>;
+
+export function parseUserId(ctx: RequestContext, app: App): number {
   const idParam = ctx.params['id'];
   if (!idParam) {
-    logger.warn('Missing user ID parameter');
+    app.logger.warn({}, 'Missing user ID parameter');
     throw new HttpError('Invalid user ID', 400);
   }
 
   const id = Number.parseInt(idParam, 10);
   if (Number.isNaN(id)) {
-    logger.warn('Invalid user ID');
+    app.logger.warn({}, 'Invalid user ID');
     throw new HttpError('Invalid user ID', 400);
   }
 

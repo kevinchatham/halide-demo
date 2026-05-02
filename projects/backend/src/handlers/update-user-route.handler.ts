@@ -1,20 +1,21 @@
-import type { RequestContext } from 'halide';
-import type { Logger, UpdateUserRequest } from 'shared';
+import type { RequestContext, THalideApp } from 'halide';
+import type { Claims, UpdateUserRequest } from 'shared';
 import { updateUser } from '../data/store';
 import { HttpError } from '../utils/http-error';
 import { parseUserId } from '../utils/parse-user-id';
 
+type App = THalideApp<Claims>;
+
 export async function updateUserHandler(
   ctx: RequestContext & { body: UpdateUserRequest },
-  _claims: unknown,
-  logger: Logger,
+  app: App,
 ) {
-  const id = parseUserId(ctx, logger);
+  const id = parseUserId(ctx, app);
 
   const body = ctx.body;
   const user = updateUser(id, body);
   if (!user) {
-    logger.warn(`User not found: ${id}`);
+    app.logger.warn({}, `User not found: ${id}`);
     throw new HttpError('User not found', 404);
   }
 

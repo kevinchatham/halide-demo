@@ -1,5 +1,7 @@
-import { apiRoute, proxyRoute } from 'halide';
-import { type HealthResponse, HealthResponseSchema, healthRouteHandler } from 'shared';
+import { type ApiRoute, apiRoute, type ProxyRoute, proxyRoute, type THalideApp } from 'halide';
+import { type Claims, type HealthResponse, HealthResponseSchema, healthRouteHandler } from 'shared';
+
+type App = THalideApp<Claims>;
 
 const healthRoute = apiRoute<unknown, unknown, HealthResponse>({
   access: 'public',
@@ -21,5 +23,6 @@ export const backendProxyRoute = proxyRoute({
   }),
 });
 
-export const apiRoutes = [healthRoute];
-export const proxyRoutes = [backendProxyRoute];
+export const apiRoutes: ApiRoute<App>[] = [healthRoute];
+
+export const proxyRoutes: ProxyRoute<App>[] = [backendProxyRoute];

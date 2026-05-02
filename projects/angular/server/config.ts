@@ -1,7 +1,9 @@
-import type { AppConfig, OpenApiConfig, SecurityConfig, ServerConfig } from 'halide';
-import { createObservabilityConfig, routes } from 'shared';
+import type { AppConfig, OpenApiConfig, SecurityConfig, ServerConfig, THalideApp } from 'halide';
+import { type Claims, createObservabilityConfig, routes } from 'shared';
 import pkg from '../package.json';
 import { apiRoutes, proxyRoutes } from './routes';
+
+type App = THalideApp<Claims>;
 
 const observability = createObservabilityConfig('[angular]');
 
@@ -38,7 +40,7 @@ const app: AppConfig = {
   root: `dist/angular/browser`,
 };
 
-export const config: ServerConfig = {
+export const config: ServerConfig<App> = {
   apiRoutes,
   app,
   observability,

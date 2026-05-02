@@ -1,11 +1,13 @@
-import type { RequestContext } from 'halide';
-import type { Logger } from 'shared';
+import type { RequestContext, THalideApp } from 'halide';
+import type { Claims } from 'shared';
 import { userStore } from '../data/store';
 import { HttpError } from '../utils/http-error';
 
-export async function getUsersRouteHandler(_ctx: RequestContext, _claims: unknown, logger: Logger) {
+type App = THalideApp<Claims>;
+
+export async function getUsersRouteHandler(_ctx: RequestContext, app: App) {
   if (userStore.length === 0) {
-    logger.warn('User store is empty');
+    app.logger.warn({ auth: 'anonymous' }, 'User store is empty');
     throw new HttpError('No users found', 404);
   }
   return userStore;

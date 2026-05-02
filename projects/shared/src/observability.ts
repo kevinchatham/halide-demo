@@ -1,35 +1,42 @@
-import type { ObservabilityConfig } from 'halide';
+import type { ObservabilityConfig, THalideApp } from 'halide';
+import type { Claims, LogScope } from './types';
 
-export function createObservabilityConfig(prefix = ''): ObservabilityConfig {
+type App = THalideApp<Claims>;
+
+export function createObservabilityConfig(prefix = ''): ObservabilityConfig<App> {
   return {
     logger: {
-      debug: (...args: unknown[]) => {
-        console.log(`${prefix}[DEBUG]`, ...args);
+      debug: (scope, ...args: unknown[]) => {
+        console.log(`${prefix}[DEBUG]`, scope, ...args);
       },
-      error: (...args: unknown[]) => {
-        console.log(`${prefix}[ERROR]`, ...args);
+      error: (scope, ...args: unknown[]) => {
+        console.log(`${prefix}[ERROR]`, scope, ...args);
       },
-      info: (...args: unknown[]) => {
-        console.log(`${prefix}[INFO]`, ...args);
+      info: (scope, ...args: unknown[]) => {
+        console.log(`${prefix}[INFO]`, scope, ...args);
       },
-      warn: (...args: unknown[]) => {
-        console.log(`${prefix}[WARN]`, ...args);
+      warn: (scope, ...args: unknown[]) => {
+        console.log(`${prefix}[WARN]`, scope, ...args);
       },
     },
-    onRequest(ctx, claims, logger) {
-      const authInfo = claims ? `authenticated user` : `anonymous`;
-      logger.info(`${ctx.method.toUpperCase()} ${ctx.path} - ${authInfo}`);
+    onRequest(ctx, app) {
+      const authInfo = app.claims ? `authenticated user` : `anonymous`;
+      app.logger.info(
+        { auth: authInfo, method: ctx.method, path: ctx.path } as LogScope,
+        `Request received`,
+      );
     },
-    onResponse(ctx, claims, response, logger) {
-      if (response.error) {
-        logger.error(
-          `${ctx.method.toUpperCase()} ${ctx.path} - ${response.statusCode} (${response.durationMs}ms) - ${response.error.message}`,
-        );
-      } else {
-        logger.info(
-          `${ctx.method.toUpperCase()} ${ctx.path} - ${response.statusCode} (${response.durationMs}ms)`,
-        );
-      }
+    onResponse(ctx, app, response) {
+      app.logger.info(
+        {
+          body: response.body,
+          durationMs: response.durationMs,
+          method: ctx.method,
+          path: ctx.path,
+          statusCode: response.statusCode,
+        } as LogScope,
+        `Response sent`,
+      );
     },
     requestId: true,
   };
