@@ -39,6 +39,16 @@ halide-demo/
 │   └── shared/      # Zod schemas + route types
 ```
 
+### Halide BFF files
+
+The following files showcase Halide's BFF capabilities:
+
+| File | Purpose |
+|------|---------|
+| [`projects/angular/server.ts`](projects/angular/server.ts) | Server entry point using `createServer` |
+| [`projects/angular/server/config.ts`](projects/angular/server/config.ts) | Server config (security, OpenAPI, app settings) |
+| [`projects/angular/server/routes.ts`](projects/angular/server/routes.ts) | API routes and proxy configuration |
+
 ### Backend API
 
 A Node.js server exposing user management endpoints:
