@@ -14,7 +14,7 @@
 
 ## Overview
 
-This demo showcases [Halide](https://github.com/kevinchatham/halide) powering an Angular 21 SPA with a full BFF layer—JWT auth, user CRUD, proxy routing, and OpenAPI docs. It demonstrates how Halide handles the frontend backend boundary in a real application.
+This demo showcases [Halide](https://github.com/kevinchatham/halide) powering an Angular 21 SPA with JWT auth, user CRUD, proxy routing, and OpenAPI docs. It demonstrates how Halide handles the frontend backend boundary in a real application.
 
 ## Get started
 
@@ -52,6 +52,8 @@ A Node.js server exposing user management endpoints:
 | POST   | `/api/users`     | Create user          |
 | PUT    | `/api/users/:id` | Update user          |
 | DELETE | `/api/users/:id` | Delete user          |
+
+> **Note:** While Halide isn't intended to replace a full backend framework, it's flexible enough to serve as one if needed.
 
 ### Angular SPA + BFF
 
