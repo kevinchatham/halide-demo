@@ -43,11 +43,11 @@ halide-demo/
 
 The following files showcase Halide's BFF capabilities:
 
-| File | Purpose |
-|------|---------|
-| [`projects/angular/server.ts`](projects/angular/server.ts) | Server entry point using `createServer` |
+| File                                                                     | Purpose                                         |
+| ------------------------------------------------------------------------ | ----------------------------------------------- |
+| [`projects/angular/server.ts`](projects/angular/server.ts)               | Server entry point using `createServer`         |
 | [`projects/angular/server/config.ts`](projects/angular/server/config.ts) | Server config (security, OpenAPI, app settings) |
-| [`projects/angular/server/routes.ts`](projects/angular/server/routes.ts) | API routes and proxy configuration |
+| [`projects/angular/server/routes.ts`](projects/angular/server/routes.ts) | API routes and proxy configuration              |
 
 ### Backend API
 

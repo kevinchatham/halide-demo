@@ -16,6 +16,21 @@ export function createObservabilityConfig(prefix = ''): ObservabilityConfig {
         console.log(`${prefix}[WARN]`, ...args);
       },
     },
+    onRequest(ctx, claims, logger) {
+      const authInfo = claims ? `authenticated user` : `anonymous`;
+      logger.info(`${ctx.method.toUpperCase()} ${ctx.path} - ${authInfo}`);
+    },
+    onResponse(ctx, claims, response, logger) {
+      if (response.error) {
+        logger.error(
+          `${ctx.method.toUpperCase()} ${ctx.path} - ${response.statusCode} (${response.durationMs}ms) - ${response.error.message}`,
+        );
+      } else {
+        logger.info(
+          `${ctx.method.toUpperCase()} ${ctx.path} - ${response.statusCode} (${response.durationMs}ms)`,
+        );
+      }
+    },
     requestId: true,
   };
 }

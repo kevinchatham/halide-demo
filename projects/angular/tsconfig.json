@@ -15,6 +15,9 @@
     "noImplicitOverride": true,
     "noImplicitReturns": true,
     "noPropertyAccessFromIndexSignature": true,
+    "paths": {
+      "shared": ["../shared/src"]
+    },
     "skipLibCheck": true,
     "strict": true,
     "target": "ES2022"
