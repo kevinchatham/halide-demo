@@ -9,21 +9,22 @@ import pkg from '../../package.json';
 import { DEMO_BEARER_AUDIENCE, DEMO_BEARER_SECRET } from './const';
 import { apiRoutes } from './routes';
 
-const observability: ObservabilityConfig = {
+const observability: ObservabilityConfig<{ userId: string }> = {
   logger: {
     debug: (...args: unknown[]) => {
-      console.log(...args);
+      console.log('[DEBUG]', ...args);
     },
     error: (...args: unknown[]) => {
-      console.log(...args);
+      console.log('[ERROR]', ...args);
     },
     info: (...args: unknown[]) => {
-      console.log(...args);
+      console.log('[INFO]', ...args);
     },
     warn: (...args: unknown[]) => {
-      console.log(...args);
+      console.log('[WARN]', ...args);
     },
   },
+  requestId: true,
 };
 
 const openapi: OpenApiConfig = {
@@ -46,6 +47,17 @@ const security: SecurityConfig = {
     credentials: true,
     origin: ['http://localhost:4200', 'http://localhost:3553'],
   },
+  csp: {
+    directives: {
+      defaultSrc: ["'self'"],
+      formAction: ["'self'"],
+      imgSrc: ["'self'", 'data:'],
+      objectSrc: ["'none'"],
+      scriptSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      upgradeInsecureRequests: [],
+    },
+  },
 };
 
 const app: AppConfig = {
@@ -53,7 +65,7 @@ const app: AppConfig = {
   port: 3000,
 };
 
-export const config: ServerConfig = {
+export const config: ServerConfig<{ userId: string }> = {
   apiRoutes,
   app,
   observability,

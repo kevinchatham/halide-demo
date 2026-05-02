@@ -17,11 +17,13 @@ export const backendProxyRoute = proxyRoute({
   access: 'public',
   methods: ['get', 'post', 'put', 'patch', 'delete'],
   path: '/api/*',
-  proxyPath: '/',
+  proxyPath: '/api',
   target: 'http://localhost:3000',
+  transform: ({ method, body, headers }) => ({
+    body: ['get', 'head'].includes(method) ? undefined : body,
+    headers: { ...headers, 'x-source': 'bff' },
+  }),
 });
 
-// biome-ignore lint/suspicious/noExplicitAny: group
-export const apiRoutes: ApiRoute<any, any>[] = [healthRoute];
-// biome-ignore lint/suspicious/noExplicitAny: group
-export const proxyRoutes: ProxyRoute<any>[] = [backendProxyRoute];
+export const apiRoutes: ApiRoute[] = [healthRoute];
+export const proxyRoutes: ProxyRoute[] = [backendProxyRoute];

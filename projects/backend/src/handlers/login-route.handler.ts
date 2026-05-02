@@ -1,27 +1,9 @@
 import { SignJWT } from 'jose';
-import { z } from 'zod';
-import { DEMO_BEARER_AUDIENCE, DEMO_BEARER_SECRET } from '../app/const.js';
+import { DEMO_BEARER_AUDIENCE, DEMO_BEARER_SECRET } from '../app/const';
 
-export type Claims = {
-  userId: string;
-};
-
-export const LoginRequestSchema = z.object({
-  password: z.string(),
-  username: z.string(),
-});
-
-export type LoginRequest = z.infer<typeof LoginRequestSchema>;
-
-export const LoginResponseSchema = z.object({
-  token: z.string(),
-});
-
-export type LoginResponse = z.infer<typeof LoginResponseSchema>;
-
-export async function loginRouteHandler(): Promise<LoginResponse> {
+export async function loginRouteHandler() {
   const secret = new TextEncoder().encode(DEMO_BEARER_SECRET);
-  const claims: Claims = {
+  const claims = {
     userId: crypto.randomUUID(),
   };
   const token = await new SignJWT(claims)

@@ -1,11 +1,3 @@
-import { z } from 'zod';
-
-export const HealthResponseSchema = z.object({
-  status: z.string(),
-});
-
-export type HealthResponse = z.infer<typeof HealthResponseSchema>;
-
-export async function healthRouteHandler(): Promise<HealthResponse> {
+export async function healthRouteHandler() {
   return { status: 'ok' };
 }

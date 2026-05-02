@@ -40,6 +40,17 @@ const security: SecurityConfig = {
     credentials: true,
     origin: ['http://localhost:4200'],
   },
+  csp: {
+    directives: {
+      defaultSrc: ["'self'"],
+      formAction: ["'self'"],
+      imgSrc: ["'self'", 'data:'],
+      objectSrc: ["'none'"],
+      scriptSrc: ["'self'"],
+      scriptSrcAttr: ["'unsafe-inline'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+    },
+  },
 };
 
 const app: AppConfig = {
