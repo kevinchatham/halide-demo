@@ -1,6 +1,6 @@
 {
   "author": "kevinchatham",
-  "description": "",
+  "description": "Backend server application",
   "license": "MIT",
   "name": "backend",
   "private": true,

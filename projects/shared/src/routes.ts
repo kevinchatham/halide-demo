@@ -1,7 +1,8 @@
 export const API_BASE = '/api';
 
 export const routes = {
-  docs: `/docs`,
+  bffHealth: '/bff/health',
+  docs: `/bff/docs`,
   health: `${API_BASE}/health`,
   login: `${API_BASE}/login`,
   userById: (id: string | number) => `${API_BASE}/users/${id}`,

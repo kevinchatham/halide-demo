@@ -1,30 +1,9 @@
-import type {
-  AppConfig,
-  ObservabilityConfig,
-  OpenApiConfig,
-  SecurityConfig,
-  ServerConfig,
-} from 'halide';
-import { routes } from 'shared';
-import pkg from '../../package.json';
+import type { AppConfig, OpenApiConfig, SecurityConfig, ServerConfig } from 'halide';
+import { createObservabilityConfig, routes } from 'shared';
+import pkg from '../package.json';
 import { apiRoutes, proxyRoutes } from './routes';
 
-const observability: ObservabilityConfig = {
-  logger: {
-    debug: (...args: unknown[]) => {
-      console.log(...args);
-    },
-    error: (...args: unknown[]) => {
-      console.log(...args);
-    },
-    info: (...args: unknown[]) => {
-      console.log(...args);
-    },
-    warn: (...args: unknown[]) => {
-      console.log(...args);
-    },
-  },
-};
+const observability = createObservabilityConfig('[angular]');
 
 const openapi: OpenApiConfig = {
   enabled: true,

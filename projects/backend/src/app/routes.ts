@@ -1,29 +1,29 @@
 import { type ApiRoute, apiRoute } from 'halide';
-import { routes } from 'shared';
-import { createUserHandler } from '../handlers/create-user-route.handler';
-import { deleteUserHandler } from '../handlers/delete-user-route.handler';
-import { getUserByIdHandler } from '../handlers/get-user-by-id-route.handler';
-import { getUsersRouteHandler } from '../handlers/get-users-route.handler';
-import { healthRouteHandler } from '../handlers/health-route.handler';
-import { loginRouteHandler } from '../handlers/login-route.handler';
-import { updateUserHandler } from '../handlers/update-user-route.handler';
 import {
   type Claims,
   type CreateUserRequest,
   CreateUserSchema,
   type HealthResponse,
   HealthResponseSchema,
+  healthRouteHandler,
   type LoginRequest,
-  LoginRequestSchema,
   type LoginResponse,
   LoginResponseSchema,
+  LoginSchema,
+  routes,
   type UpdateUserRequest,
   UpdateUserSchema,
   type UserListResponse,
   UserListSchema,
   type UserResponse,
   UserSchema,
-} from '../types';
+} from 'shared';
+import { createUserHandler } from '../handlers/create-user-route.handler';
+import { deleteUserHandler } from '../handlers/delete-user-route.handler';
+import { getUserByIdHandler } from '../handlers/get-user-by-id-route.handler';
+import { getUsersRouteHandler } from '../handlers/get-users-route.handler';
+import { loginRouteHandler } from '../handlers/login-route.handler';
+import { updateUserHandler } from '../handlers/update-user-route.handler';
 
 const healthRoute = apiRoute<unknown, unknown, HealthResponse>({
   access: 'public',
@@ -38,7 +38,7 @@ const loginRoute = apiRoute<unknown, LoginRequest, LoginResponse>({
   handler: loginRouteHandler,
   method: 'post',
   path: routes.login,
-  requestSchema: LoginRequestSchema,
+  requestSchema: LoginSchema,
   responseSchema: LoginResponseSchema,
 });
 

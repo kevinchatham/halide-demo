@@ -1,16 +1,22 @@
 {
   "sessions": {
-    "ses_219a8db20ffeWnp3vFl3fjCZmY": {
-      "createdAt": "2026-05-02T01:39:24.040Z",
+    "ses_219167853ffe4K3hfSQ5HuPjik": {
+      "createdAt": "2026-05-02T04:19:17.591Z",
       "worktreeId": null
     },
-    "ses_219a82d1effevs97lPZzFfZWsz": {
-      "createdAt": "2026-05-02T01:40:08.691Z",
+    "ses_219193734ffe3jDOiRU26ar8gm": {
+      "createdAt": "2026-05-02T04:16:17.661Z",
       "worktreeId": null
     }
   },
   "tabOrder": {
-    "local": ["ses_219a8db20ffeWnp3vFl3fjCZmY", "ses_219a82d1effevs97lPZzFfZWsz"]
+    "local": [
+      "ses_21923e5c2ffepYzwMNy6fguuyI",
+      "ses_2192029fdffemP8J7mZZLGwCM8",
+      "ses_2191a4edbffeliRw7JjooCXiM5",
+      "ses_219193734ffe3jDOiRU26ar8gm",
+      "ses_219167853ffe4K3hfSQ5HuPjik"
+    ]
   },
   "worktrees": {}
 }

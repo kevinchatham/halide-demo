@@ -1,32 +1,10 @@
-import type {
-  AppConfig,
-  ObservabilityConfig,
-  OpenApiConfig,
-  SecurityConfig,
-  ServerConfig,
-} from 'halide';
-import { routes } from 'shared';
+import type { AppConfig, OpenApiConfig, SecurityConfig, ServerConfig } from 'halide';
+import { createObservabilityConfig, routes } from 'shared';
 import pkg from '../../package.json';
 import { DEMO_BEARER_AUDIENCE, DEMO_BEARER_SECRET } from './const';
 import { apiRoutes } from './routes';
 
-const observability: ObservabilityConfig<{ userId: string }> = {
-  logger: {
-    debug: (...args: unknown[]) => {
-      console.log('[DEBUG]', ...args);
-    },
-    error: (...args: unknown[]) => {
-      console.log('[ERROR]', ...args);
-    },
-    info: (...args: unknown[]) => {
-      console.log('[INFO]', ...args);
-    },
-    warn: (...args: unknown[]) => {
-      console.log('[WARN]', ...args);
-    },
-  },
-  requestId: true,
-};
+const observability = createObservabilityConfig('[backend]');
 
 const openapi: OpenApiConfig = {
   enabled: true,
@@ -35,7 +13,7 @@ const openapi: OpenApiConfig = {
     title: 'halide-demo-backend',
     version: pkg.version,
   },
-  path: routes.backendDocs,
+  path: routes.docs,
 };
 
 const security: SecurityConfig = {

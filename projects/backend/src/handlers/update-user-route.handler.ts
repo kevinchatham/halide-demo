@@ -1,24 +1,15 @@
 import type { RequestContext } from 'halide';
-import { type UpdateUser, updateUser } from '../data/store';
-import type { Logger } from '../types';
+import type { Logger, UpdateUserRequest } from 'shared';
+import { updateUser } from '../data/store';
 import { HttpError } from '../utils/http-error';
+import { parseUserId } from '../utils/parse-user-id';
 
 export async function updateUserHandler(
-  ctx: RequestContext & { body: UpdateUser },
+  ctx: RequestContext & { body: UpdateUserRequest },
   _claims: unknown,
   logger: Logger,
 ) {
-  const idParam = ctx.params['id'];
-  if (!idParam) {
-    logger.warn('Missing user ID parameter');
-    throw new HttpError('Invalid user ID', 400);
-  }
-
-  const id = Number.parseInt(idParam, 10);
-  if (Number.isNaN(id)) {
-    logger.warn('Invalid user ID');
-    throw new HttpError('Invalid user ID', 400);
-  }
+  const id = parseUserId(ctx, logger);
 
   const body = ctx.body;
   const user = updateUser(id, body);

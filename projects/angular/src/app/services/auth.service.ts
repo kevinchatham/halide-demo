@@ -2,16 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-import { routes } from 'shared';
-
-export interface LoginRequest {
-  password: string;
-  username: string;
-}
-
-export interface LoginResponse {
-  token: string;
-}
+import { type LoginResponse, routes } from 'shared';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -29,7 +20,10 @@ export class AuthService {
       const response = await firstValueFrom(
         this.http.post<LoginResponse>(routes.login, { password, username }),
       );
-      localStorage.setItem(this.TOKEN_KEY, response.token);
+
+      if (!response.token) return false;
+
+      sessionStorage.setItem(this.TOKEN_KEY, response.token);
       this.token.set(response.token);
       this.isAuthenticated.set(true);
       return true;
@@ -39,7 +33,7 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem(this.TOKEN_KEY);
+    sessionStorage.removeItem(this.TOKEN_KEY);
     this.token.set(null);
     this.isAuthenticated.set(false);
     this.router.navigate(['/login']);

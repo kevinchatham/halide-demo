@@ -2,7 +2,7 @@
   "name": "halide-demo",
   "version": "0.0.0",
   "private": true,
-  "description": "",
+  "description": "A declarative BFF runtime with auth, proxy, CSP, rate limiting, and OpenAPI support",
   "license": "MIT",
   "author": "kevinchatham",
   "workspaces": [
@@ -16,7 +16,9 @@
     "lint:watch": "nodemon --exec 'npm run lint:fix' --watch '**/*.ts' --watch '**/*.json' --ext '.ts,.json'",
     "lint": "biome check --config-path biome.json .",
     "skills:link": "rm -rf .kilo/skills/halide && ln -s ../../.agents/skills/halide .kilo/skills/halide",
-    "skills:update": "halide init --skills-only"
+    "skills:update": "halide init --skills-only",
+    "prestart": "cd projects/shared && npm run build",
+    "start": "npx concurrently --names \"shared,backend,angular\" --prefix-colors \"cyan,yellow,magenta\" \"npm run serve --prefix projects/shared\" \"npm run serve --prefix projects/backend\" \"npm run serve:angular --prefix projects/angular\""
   },
   "dependencies": {
     "halide": "^0.0.9",

@@ -1,6 +1,7 @@
 {
   "name": "shared",
   "version": "1.0.0",
+  "description": "Shared libraries and utilities",
   "type": "commonjs",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

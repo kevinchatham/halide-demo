@@ -1,10 +1,10 @@
 import type { RequestContext } from 'halide';
-import { type CreateUser, createUser } from '../data/store';
-import type { Logger } from '../types';
+import type { CreateUserRequest, Logger } from 'shared';
+import { createUser } from '../data/store';
 import { HttpError } from '../utils/http-error';
 
 export async function createUserHandler(
-  ctx: RequestContext & { body: CreateUser },
+  ctx: RequestContext & { body: CreateUserRequest },
   _claims: unknown,
   logger: Logger,
 ) {

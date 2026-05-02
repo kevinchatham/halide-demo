@@ -1,9 +1,5 @@
 import { apiRoute, proxyRoute } from 'halide';
-import {
-  type HealthResponse,
-  HealthResponseSchema,
-  healthRouteHandler,
-} from '../handlers/health-route.handler';
+import { type HealthResponse, HealthResponseSchema, healthRouteHandler } from 'shared';
 
 const healthRoute = apiRoute<unknown, unknown, HealthResponse>({
   access: 'public',

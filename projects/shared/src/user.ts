@@ -21,3 +21,24 @@ export type CreateUserRequest = z.infer<typeof CreateUserSchema>;
 
 export const UpdateUserSchema = CreateUserSchema.partial();
 export type UpdateUserRequest = z.infer<typeof UpdateUserSchema>;
+
+export const LoginResponseSchema = z.object({
+  token: z.string(),
+});
+export type LoginResponse = z.infer<typeof LoginResponseSchema>;
+
+export const HealthResponseSchema = z.object({
+  status: z.string(),
+});
+export type HealthResponse = z.infer<typeof HealthResponseSchema>;
+
+export type Claims = {
+  userId: string;
+};
+
+export type Logger = {
+  error: (msg: string) => void;
+  warn: (msg: string) => void;
+  info: (msg: string) => void;
+  debug: (msg: string) => void;
+};

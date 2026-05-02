@@ -1,14 +1,4 @@
-import type { CreateUserRequest, UpdateUserRequest, UserResponse } from '../types/index';
-
-export type {
-  CreateUserRequest as CreateUser,
-  UpdateUserRequest as UpdateUser,
-  UserListResponse as UserList,
-  UserResponse as User,
-} from '../types/index';
-export { CreateUserSchema, UpdateUserSchema, UserListSchema, UserSchema } from '../types/index';
-
-let nextId = 4;
+import type { CreateUserRequest, UpdateUserRequest, UserResponse } from 'shared';
 
 export const userStore: UserResponse[] = [
   { email: 'alice@example.com', id: 1, name: 'Alice' },
@@ -16,12 +6,21 @@ export const userStore: UserResponse[] = [
   { email: 'charlie@example.com', id: 3, name: 'Charlie' },
 ];
 
+function* generateUserId(): Generator<number, number, unknown> {
+  let nextId = 4;
+  while (true) {
+    yield nextId++;
+  }
+}
+
+const userIdGenerator = generateUserId();
+
 export function getUserById(id: number): UserResponse | undefined {
   return userStore.find((u) => u.id === id);
 }
 
 export function createUser(data: CreateUserRequest): UserResponse {
-  const user: UserResponse = { id: nextId++, ...data };
+  const user: UserResponse = { id: userIdGenerator.next().value, ...data };
   userStore.push(user);
   return user;
 }
