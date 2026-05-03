@@ -18,7 +18,7 @@
     "skills:link": "rm -rf .kilo/skills/halide && ln -s ../../.agents/skills/halide .kilo/skills/halide",
     "skills:update": "halide init --skills-only",
     "prestart": "cd projects/shared && npm run build",
-    "start": "npx concurrently --names \"shared,backend,angular\" --prefix-colors \"cyan,yellow,magenta\" \"npm run serve --prefix projects/shared\" \"npm run serve --prefix projects/backend\" \"npm run serve:angular --prefix projects/angular\""
+    "start": "npx concurrently --names \"shared,backend,angular\" --prefix-colors \"cyan,yellow,magenta\" \"npm run serve --prefix projects/shared\" \"npm run serve --prefix projects/backend\" \"npm run serve --prefix projects/angular\""
   },
   "dependencies": {
     "halide": "^0.0.9",
