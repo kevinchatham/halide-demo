@@ -3,3 +3,5 @@
 **/node_modules
 .kilo/plans/
 .kilo/agent-manager.json
+.kilo/
+.kilo1/
