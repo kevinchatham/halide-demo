@@ -21,7 +21,7 @@
     "start": "npx concurrently --names \"shared,backend,angular\" --prefix-colors \"cyan,yellow,magenta\" \"npm run serve --prefix projects/shared\" \"npm run serve --prefix projects/backend\" \"npm run serve --prefix projects/angular\""
   },
   "dependencies": {
-    "halide": "^0.0.9",
+    "halide": "^0.0.10",
     "jose": "^6.2.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
