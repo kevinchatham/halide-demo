@@ -6,7 +6,7 @@ import { apiRoutes } from './routes';
 
 type App = THalideApp<Claims>;
 
-const observability = createObservabilityConfig('[backend]');
+const observability = createObservabilityConfig();
 
 const openapi: OpenApiConfig = {
   enabled: true,

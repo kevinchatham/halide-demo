@@ -14,6 +14,9 @@ const healthRoute = apiRoute<unknown, unknown, HealthResponse>({
 export const backendProxyRoute = proxyRoute({
   access: 'public',
   methods: ['get', 'post', 'put', 'patch', 'delete'],
+  openapiSpec: {
+    path: 'http://localhost:3000/bff/docs/openapi.json',
+  },
   path: '/api/*',
   proxyPath: '/api',
   target: 'http://localhost:3000',

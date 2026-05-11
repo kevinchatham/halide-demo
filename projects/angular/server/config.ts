@@ -5,7 +5,7 @@ import { apiRoutes, proxyRoutes } from './routes';
 
 type App = THalideApp<Claims>;
 
-const observability = createObservabilityConfig('[angular]');
+const observability = createObservabilityConfig();
 
 const openapi: OpenApiConfig = {
   enabled: true,
