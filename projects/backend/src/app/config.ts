@@ -1,10 +1,8 @@
-import type { AppConfig, OpenApiConfig, SecurityConfig, ServerConfig, THalideApp } from 'halide';
-import { type Claims, observabilityConfig, routes } from 'shared';
+import type { AppConfig, OpenApiConfig, SecurityConfig, ServerConfig } from 'halide';
+import { type Claims, type LogScope, observability, routes } from 'shared';
 import pkg from '../../package.json';
 import { DEMO_BEARER_AUDIENCE, DEMO_BEARER_SECRET } from './const';
 import { apiRoutes } from './routes';
-
-type App = THalideApp<Claims>;
 
 const openapi: OpenApiConfig = {
   enabled: true,
@@ -33,10 +31,10 @@ const app: AppConfig = {
   port: 3000,
 };
 
-export const config: ServerConfig<App> = {
+export const config: ServerConfig<Claims, LogScope> = {
   apiRoutes,
   app,
-  observability: observabilityConfig,
+  observability,
   openapi,
   security,
 };

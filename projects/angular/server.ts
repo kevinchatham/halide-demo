@@ -1,5 +1,8 @@
-import { createServer } from 'halide';
+import { defineHalide } from 'halide';
+import type { App } from 'shared';
 import { config } from './server/config';
+
+const { createServer } = defineHalide<App>();
 
 const server = createServer(config);
 

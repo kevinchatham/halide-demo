@@ -1,8 +1,6 @@
-import type { RequestContext, THalideApp } from 'halide';
-import type { Claims } from 'shared';
+import type { RequestContext } from 'halide';
+import type { App } from 'shared';
 import { HttpError } from './http-error';
-
-type App = THalideApp<Claims>;
 
 export function parseUserId(ctx: RequestContext, app: App): number {
   const idParam = ctx.params['id'];

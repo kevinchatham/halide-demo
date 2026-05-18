@@ -1,3 +1,4 @@
+import type { HalideContext } from 'halide';
 import type z from 'zod';
 import type {
   CreateUserSchema,
@@ -23,6 +24,8 @@ export type LogScope = {
 export type Claims = {
   userId: string;
 };
+
+export type App = HalideContext<Claims, LogScope>;
 
 export type CreateUserRequest = z.infer<typeof CreateUserSchema>;
 export type HealthResponse = z.infer<typeof HealthResponseSchema>;

@@ -1,6 +1,6 @@
-import { type ApiRoute, apiRoute, type THalideApp } from 'halide';
+import { defineHalide } from 'halide';
 import {
-  type Claims,
+  type App,
   type CreateUserRequest,
   CreateUserSchema,
   type HealthResponse,
@@ -25,9 +25,9 @@ import { getUsersRouteHandler } from '../handlers/get-users-route.handler';
 import { loginRouteHandler } from '../handlers/login-route.handler';
 import { updateUserHandler } from '../handlers/update-user-route.handler';
 
-type App = THalideApp<Claims>;
+const { apiRoute } = defineHalide<App>();
 
-const healthRoute = apiRoute<unknown, unknown, HealthResponse>({
+const healthRoute = apiRoute<unknown, HealthResponse>({
   access: 'public',
   handler: healthRouteHandler,
   method: 'get',
@@ -35,7 +35,7 @@ const healthRoute = apiRoute<unknown, unknown, HealthResponse>({
   responseSchema: HealthResponseSchema,
 });
 
-const loginRoute = apiRoute<unknown, LoginRequest, LoginResponse>({
+const loginRoute = apiRoute<LoginRequest, LoginResponse>({
   access: 'public',
   handler: loginRouteHandler,
   method: 'post',
@@ -44,7 +44,7 @@ const loginRoute = apiRoute<unknown, LoginRequest, LoginResponse>({
   responseSchema: LoginResponseSchema,
 });
 
-const getUsersRoute = apiRoute<App, unknown, UserListResponse>({
+const getUsersRoute = apiRoute<unknown, UserListResponse>({
   access: 'private',
   handler: getUsersRouteHandler,
   method: 'get',
@@ -52,14 +52,14 @@ const getUsersRoute = apiRoute<App, unknown, UserListResponse>({
   responseSchema: UserListSchema,
 });
 
-const getUserByIdRoute = apiRoute<App, unknown, UserResponse>({
+const getUserByIdRoute = apiRoute<unknown, UserResponse>({
   access: 'private',
   handler: getUserByIdHandler,
   method: 'get',
   path: routes.userById(':id'),
 });
 
-const createUserRoute = apiRoute<App, CreateUserRequest, UserResponse>({
+const createUserRoute = apiRoute<CreateUserRequest, UserResponse>({
   access: 'private',
   handler: createUserHandler,
   method: 'post',
@@ -68,7 +68,7 @@ const createUserRoute = apiRoute<App, CreateUserRequest, UserResponse>({
   responseSchema: UserSchema,
 });
 
-const updateUserRoute = apiRoute<App, UpdateUserRequest, UserResponse>({
+const updateUserRoute = apiRoute<UpdateUserRequest, UserResponse>({
   access: 'private',
   handler: updateUserHandler,
   method: 'put',
@@ -77,14 +77,14 @@ const updateUserRoute = apiRoute<App, UpdateUserRequest, UserResponse>({
   responseSchema: UserSchema,
 });
 
-const deleteUserRoute = apiRoute<App, unknown, { success: boolean }>({
+const deleteUserRoute = apiRoute<unknown, { success: boolean }>({
   access: 'private',
   handler: deleteUserHandler,
   method: 'delete',
   path: routes.userById(':id'),
 });
 
-export const apiRoutes: ApiRoute<App>[] = [
+export const apiRoutes = [
   healthRoute,
   loginRoute,
   getUsersRoute,
