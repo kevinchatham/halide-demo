@@ -6,7 +6,9 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "serve": "nodemon"
+    "build": "tsc",
+    "serve": "nodemon",
+    "start": "node dist/backend/src/server.js"
   },
   "dependencies": {
     "shared": "*"

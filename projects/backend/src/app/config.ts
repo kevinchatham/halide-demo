@@ -1,8 +1,10 @@
 import type { AppConfig, OpenApiConfig, SecurityConfig, ServerConfig } from 'halide';
 import { type Claims, type LogScope, observability, routes } from 'shared';
 import pkg from '../../package.json';
-import { DEMO_BEARER_AUDIENCE, DEMO_BEARER_SECRET } from './const';
-import { apiRoutes } from './routes';
+import { apiRoutes } from '../routes';
+
+export const DEMO_BEARER_SECRET = 'this-is-a-super-secure-secret-demo-use-only';
+export const DEMO_BEARER_AUDIENCE = 'halide-demo';
 
 const openapi: OpenApiConfig = {
   enabled: true,

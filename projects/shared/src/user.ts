@@ -23,3 +23,7 @@ export const LoginResponseSchema = z.object({
 export const HealthResponseSchema = z.object({
   status: z.string(),
 });
+
+export const DeleteUserResponseSchema = z.object({
+  success: z.literal(true),
+});
