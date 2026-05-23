@@ -7,6 +7,7 @@ import { DEMO_BEARER_AUDIENCE, DEMO_BEARER_SECRET } from '../app/config';
 export const loginRoute = apiRoute<LoginRequest, LoginResponse>({
   access: 'public',
   path: '/api/login',
+  method: 'post',
   requestSchema: LoginSchema,
   responseSchema: LoginResponseSchema,
   handler: async () => {

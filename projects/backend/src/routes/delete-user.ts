@@ -9,6 +9,7 @@ import { parseUserId } from '../utils/parse-user-id';
 export const deleteUserRoute = apiRoute<void, DeleteUserResponse>({
   access: 'private',
   path: '/api/users/:id',
+  method: 'delete',
   responseSchema: DeleteUserResponseSchema,
   handler: async (ctx: RequestContext, app: App) => {
     const id = parseUserId(ctx, app);
