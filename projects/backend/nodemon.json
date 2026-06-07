@@ -1,5 +1,5 @@
 {
-  "exec": "npx tsc --noEmit && npx tsx src/server.ts",
+  "exec": "npm run build && npm run start",
   "ext": "ts",
   "ignore": ["dist", "node_modules"],
   "watch": ["src"]

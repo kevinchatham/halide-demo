@@ -1,9 +1,7 @@
-import type { AppConfig, OpenApiConfig, SecurityConfig, ServerConfig, THalideApp } from 'halide';
-import { type Claims, observabilityConfig, routes } from 'shared';
+import type { AppConfig, OpenApiConfig, SecurityConfig, ServerConfig } from 'halide';
+import { type Claims, type LogScope, observability, routes } from 'shared';
 import pkg from '../package.json';
 import { apiRoutes, proxyRoutes } from './routes';
-
-type App = THalideApp<Claims>;
 
 const openapi: OpenApiConfig = {
   enabled: true,
@@ -21,15 +19,13 @@ const security: SecurityConfig = {
     origin: ['http://localhost:4200'],
   },
   csp: {
-    directives: {
-      defaultSrc: ["'self'"],
-      formAction: ["'self'"],
-      imgSrc: ["'self'", 'data:'],
-      objectSrc: ["'none'"],
-      scriptSrc: ["'self'"],
-      scriptSrcAttr: ["'unsafe-inline'"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
-    },
+    defaultSrc: ["'self'"],
+    formAction: ["'self'"],
+    imgSrc: ["'self'", 'data:'],
+    objectSrc: ["'none'"],
+    scriptSrc: ["'self'"],
+    scriptSrcAttr: ["'unsafe-inline'"],
+    styleSrc: ["'self'", "'unsafe-inline'"],
   },
 };
 
@@ -38,10 +34,10 @@ const app: AppConfig = {
   root: `dist/angular/browser`,
 };
 
-export const config: ServerConfig<App> = {
+export const config: ServerConfig<Claims, LogScope> = {
   apiRoutes,
   app,
-  observability: observabilityConfig,
+  observability,
   openapi,
   proxyRoutes,
   security,

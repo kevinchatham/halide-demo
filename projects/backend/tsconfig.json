@@ -1,10 +1,18 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
-    "moduleResolution": "bundler",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "outDir": "./dist",
     "paths": {
       "shared": ["../shared/src"]
     },
-    "target": "ES2022"
-  }
+    "resolveJsonModule": true,
+    "rootDir": "..",
+    "strict": true,
+    "target": "es2022",
+    "types": ["node"]
+  },
+  "exclude": ["**/*.spec.ts"],
+  "include": ["src/"]
 }
