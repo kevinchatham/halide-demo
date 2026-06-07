@@ -11,7 +11,7 @@ export const getUsersRoute = apiRoute<void, UserListResponse>({
   responseSchema: UserListSchema,
   handler: async (_ctx: RequestContext, app: App) => {
     if (userStore.length === 0) {
-      app.logger.warn({}, 'User store is empty');
+      app.logger.warn({});
       throw new HttpError('No users found', 404);
     }
     return userStore;

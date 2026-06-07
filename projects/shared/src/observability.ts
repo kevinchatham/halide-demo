@@ -8,10 +8,10 @@ export const observability: ObservabilityConfig<Claims, LogScope> = {
     path: ctx.path,
   }),
   onRequest(_ctx, app) {
-    app.logger.info({}, `Request received`);
+    app.logger.info({});
   },
   onResponse(_ctx, app, _response) {
-    app.logger.info({}, `Response sent`);
+    app.logger.info({});
   },
   requestId: true,
 };

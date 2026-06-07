@@ -15,7 +15,7 @@ export const deleteUserRoute = apiRoute<void, DeleteUserResponse>({
     const id = parseUserId(ctx, app);
     const user = deleteUser(id);
     if (!user) {
-      app.logger.warn({}, `User not found: ${id}`);
+      app.logger.warn({});
       throw new HttpError('User not found', 404);
     }
     return { success: true };

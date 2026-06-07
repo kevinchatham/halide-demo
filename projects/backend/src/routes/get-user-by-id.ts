@@ -14,7 +14,7 @@ export const getUserByIdRoute = apiRoute<void, UserResponse>({
     const id = parseUserId(ctx, app);
     const user = getUserById(id);
     if (!user) {
-      app.logger.warn({}, `User not found: ${id}`);
+      app.logger.warn({});
       throw new HttpError('User not found', 404);
     }
     return user;
